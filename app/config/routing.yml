@@ -1,6 +1,6 @@
 blogger_blog:
     resource: "@BloggerBlogBundle/Resources/config/routing.yml"
-    prefix:   /blogger
+    prefix:   /
 
 # Internal routing configuration to handle ESI
 #_internal:
