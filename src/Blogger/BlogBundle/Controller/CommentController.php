@@ -1,0 +1,84 @@
+<?php
+// src/Blogger/BlogBundle/Controller/CommentController.php
+
+namespace Blogger\BlogBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Blogger\BlogBundle\Entity\Comment;
+use Blogger\BlogBundle\Form\CommentType;
+
+/**
+ *  Comment Controller
+ */
+class CommentController extends Controller
+{
+    /**
+     * @param $blog_id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function newAction($blog_id)
+    {
+        $blog = $this->getBlog($blog_id);
+
+        $comment = new Comment();
+        $comment->setBlog($blog);
+        $form   = $this->createForm(new CommentType(), $comment);
+
+        return $this->render('BloggerBlogBundle:Comment:form.html.twig', array(
+                'comment' => $comment,
+                'form'   => $form->createView()
+            ));
+    }
+
+    /**
+     * @param $blog_id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function createAction($blog_id)
+    {
+        $blog = $this->getBlog($blog_id);
+
+        $comment  = new Comment();
+        $comment->setBlog($blog);
+        $request = $this->getRequest();
+        $form    = $this->createForm(new CommentType(), $comment);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            // TODO: Persist the comment entity
+
+            return $this->redirect($this->generateUrl('BloggerBlogBundle_blog_show', array(
+                        'id' => $comment->getBlog()->getId())) .
+                    '#comment-' . $comment->getId()
+            );
+        }
+
+        return $this->render('BloggerBlogBundle:Comment:create.html.twig', array(
+                'comment' => $comment,
+                'form'    => $form->createView()
+            ));
+    }
+
+    /**
+     * @param $blog_id
+     *
+     * @return mixed
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    protected function getBlog($blog_id)
+    {
+        $em = $this->getDoctrine()
+            ->getManager();
+
+        $blog = $em->getRepository('BloggerBlogBundle:Blog')->find($blog_id);
+
+        if (!$blog) {
+            throw $this->createNotFoundException('Unable to find Blog post.');
+        }
+
+        return $blog;
+    }
+
+}
