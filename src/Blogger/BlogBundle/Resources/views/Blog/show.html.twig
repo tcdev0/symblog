@@ -19,5 +19,6 @@
             <h3>Comments</h3>
             {% include 'BloggerBlogBundle:Comment:index.html.twig' with { 'comments' : comments } %}
         </section>
+            {% render url('BloggerBlogBundle_comment_create', { 'blog_id': blog.id }) %}
     </section>
 {% endblock %}
