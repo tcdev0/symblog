@@ -46,7 +46,7 @@ class CommentController extends Controller
         $request = $this->getRequest();
         $form    = $this->createForm(new CommentType(), $comment);
 
-        if ($this->getRequest()->isMethod('POST')) {
+        /*if ($this->getRequest()->isMethod('POST')) {*/
             $form->bind($request);
 
             if ($form->isValid()) {
@@ -60,7 +60,7 @@ class CommentController extends Controller
                         '#comment-' . $comment->getId()
                 );
             }
-        }
+        //}
 
         return $this->render('BloggerBlogBundle:Comment:create.html.twig', array(
             'comment' => $comment,
