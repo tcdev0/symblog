@@ -58,3 +58,10 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+# Twig Dump aktivieren
+services:
+    acme_hello.twig.extension.debug:
+        class: Twig_Extension_Debug
+        tags:
+             - { name: 'twig.extension' }
