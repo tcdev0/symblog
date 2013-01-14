@@ -42,23 +42,30 @@ class CommentController extends Controller
 
         $comment  = new Comment();
         $comment->setBlog($blog);
+
         $request = $this->getRequest();
         $form    = $this->createForm(new CommentType(), $comment);
-        $form->bind($request);
 
-        if ($form->isValid()) {
-            // TODO: Persist the comment entity
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($request);
 
-            return $this->redirect($this->generateUrl('BloggerBlogBundle_blog_show', array(
-                        'id' => $comment->getBlog()->getId())) .
-                    '#comment-' . $comment->getId()
-            );
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()
+                           ->getManager();
+                $em->persist($comment);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('BloggerBlogBundle_blog_show', array(
+                            'id' => $comment->getBlog()->getId())) .
+                        '#comment-' . $comment->getId()
+                );
+            }
         }
 
         return $this->render('BloggerBlogBundle:Comment:create.html.twig', array(
-                'comment' => $comment,
-                'form'    => $form->createView()
-            ));
+            'comment' => $comment,
+            'form'    => $form->createView()
+        ));
     }
 
     /**
