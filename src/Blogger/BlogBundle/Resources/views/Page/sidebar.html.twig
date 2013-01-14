@@ -25,7 +25,7 @@
                         {{ comment.blog.title }}
                     </a>
                     [<em>
-                        <time datetime="{{ comment.created|date('c') }}">{{ comment.created|date('Y-m-d h:iA') }}</time>
+                        <time datetime="{{ comment.created|date('c') }}">{{ comment.created| created_ago }}</time>
                     </em>]
                 </p>
             </header>
