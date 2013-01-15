@@ -1,6 +1,7 @@
 .idea
 app/config/parameters.yml
 web/bundles/
+web/css/*
 app/bootstrap.php.cache
 app/cache/*
 app/logs/*
@@ -8,3 +9,4 @@ build/
 vendor
 composer.phar
 composer.lock
+
