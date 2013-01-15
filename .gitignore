@@ -1,6 +1,7 @@
 .idea
 app/config/parameters.yml
-web/bundles/
+app/phpunit.xml
+web/bundles/*
 web/css/*
 app/bootstrap.php.cache
 app/cache/*

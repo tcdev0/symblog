@@ -84,7 +84,7 @@ class Blog
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -95,19 +95,20 @@ class Blog
      * Set title
      *
      * @param string $title
+     *
      * @return Blog
      */
     public function setTitle($title)
     {
         $this->title = $title;
-    
+
         $this->setSlug($this->title);
     }
 
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -118,19 +119,20 @@ class Blog
      * Set author
      *
      * @param string $author
+     *
      * @return Blog
      */
     public function setAuthor($author)
     {
         $this->author = $author;
-    
+
         return $this;
     }
 
     /**
      * Get author
      *
-     * @return string 
+     * @return string
      */
     public function getAuthor()
     {
@@ -141,12 +143,13 @@ class Blog
      * Set blog
      *
      * @param string $blog
+     *
      * @return Blog
      */
     public function setBlog($blog)
     {
         $this->blog = $blog;
-    
+
         return $this;
     }
 
@@ -157,29 +160,31 @@ class Blog
      */
     public function getBlog($length = null)
     {
-        if (false === is_null($length) && $length > 0)
+        if (false === is_null($length) && $length > 0) {
             return substr($this->blog, 0, $length);
-        else
+        } else {
             return $this->blog;
+        }
     }
 
     /**
      * Set image
      *
      * @param string $image
+     *
      * @return Blog
      */
     public function setImage($image)
     {
         $this->image = $image;
-    
+
         return $this;
     }
 
     /**
      * Get image
      *
-     * @return string 
+     * @return string
      */
     public function getImage()
     {
@@ -190,19 +195,20 @@ class Blog
      * Set tags
      *
      * @param string $tags
+     *
      * @return Blog
      */
     public function setTags($tags)
     {
         $this->tags = $tags;
-    
+
         return $this;
     }
 
     /**
      * Get tags
      *
-     * @return string 
+     * @return string
      */
     public function getTags()
     {
@@ -213,19 +219,20 @@ class Blog
      * Set created
      *
      * @param \DateTime $created
+     *
      * @return Blog
      */
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -236,19 +243,20 @@ class Blog
      * Set updated
      *
      * @param \DateTime $updated
+     *
      * @return Blog
      */
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -259,12 +267,13 @@ class Blog
      * Add comments
      *
      * @param \Blogger\BlogBundle\Entity\Comment $comments
+     *
      * @return Blog
      */
     public function addComment(\Blogger\BlogBundle\Entity\Comment $comments)
     {
         $this->comments[] = $comments;
-    
+
         return $this;
     }
 
@@ -281,7 +290,7 @@ class Blog
     /**
      * Get comments
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getComments()
     {
@@ -300,6 +309,7 @@ class Blog
      * Set slug
      *
      * @param string $slug
+     *
      * @return Blog
      */
     public function setSlug($slug)
@@ -310,7 +320,7 @@ class Blog
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
@@ -326,10 +336,9 @@ class Blog
         $text = trim($text, '-');
 
         // transliterate
-//        if (function_exists('iconv'))
-//        {
-//            $text = inconv('utf-8', 'us-ascii//TRANSLIT', $text);
-//        }
+        if (function_exists('iconv')) {
+            $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+        }
 
         // lowercase
         $text = strtolower($text);
@@ -337,8 +346,7 @@ class Blog
         // remove unwanted characters
         $text = preg_replace('#[^-\w]+#', '', $text);
 
-        if (empty($text))
-        {
+        if (empty($text)) {
             return 'n-a';
         }
 
