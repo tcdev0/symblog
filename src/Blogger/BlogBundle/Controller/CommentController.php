@@ -6,6 +6,9 @@ namespace Blogger\BlogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Blogger\BlogBundle\Entity\Comment;
 use Blogger\BlogBundle\Form\CommentType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  *  Comment Controller
@@ -14,8 +17,11 @@ class CommentController extends Controller
 {
     /**
      * @param $blog_id
-     *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Route("{blog_id}" , name="comment_new")
+     * @Method("GET")
+     * @Template("BloggerBlogBundle:Comment:form.html.twig")
      */
     public function newAction($blog_id)
     {
@@ -25,16 +31,19 @@ class CommentController extends Controller
         $comment->setBlog($blog);
         $form   = $this->createForm(new CommentType(), $comment);
 
-        return $this->render('BloggerBlogBundle:Comment:form.html.twig', array(
+        return array(
                 'comment' => $comment,
                 'form'   => $form->createView()
-            ));
+            );
     }
 
     /**
      * @param $blog_id
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @Route("{blog_id}" , name="comment_create")
+     * @Method("POST")
+     * @Template("BloggerBlogBundle:Comment:create.html.twig")
      */
     public function createAction($blog_id)
     {
@@ -55,7 +64,7 @@ class CommentController extends Controller
                 $em->persist($comment);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('BloggerBlogBundle_blog_show', array(
+                return $this->redirect($this->generateUrl('blog_show', array(
                     'id'   => $comment->getBlog()->getId() ,
                     'slug' => $comment->getBlog()->getSlug())).
                     '#comment-' . $comment->getId()
@@ -63,15 +72,14 @@ class CommentController extends Controller
             }
         //}
 
-        return $this->render('BloggerBlogBundle:Comment:create.html.twig', array(
+        return array(
             'comment' => $comment,
             'form'    => $form->createView()
-        ));
+        );
     }
 
     /**
      * @param $blog_id
-     *
      * @return mixed
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */

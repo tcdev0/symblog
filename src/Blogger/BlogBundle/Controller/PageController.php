@@ -12,13 +12,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 
-/**
- * @Route("/")
- */
 class PageController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/" , name="blog_homepage")
      * @Method("GET")
      * @Template("BloggerBlogBundle:Page:index.html.twig")
      */
@@ -36,7 +33,7 @@ class PageController extends Controller
     }
 
     /**
-     * @Route("/about")
+     * @Route("/about" , name="blog_about")
      * @Method("GET")
      */
     public function aboutAction()
@@ -45,7 +42,7 @@ class PageController extends Controller
     }
 
     /**
-     * @Route("/contact")
+     * @Route("/contact" , name="blog_contact")
      * @Method({"GET", "POST"})
      * @Template("BloggerBlogBundle:Page:contact.html.twig")
      */
@@ -109,6 +106,3 @@ class PageController extends Controller
         );
     }
 }
-
-
-
