@@ -7,10 +7,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 // Import new namespaces
 use Blogger\BlogBundle\Entity\Enquiry;
 use Blogger\BlogBundle\Form\EnquiryType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 
 class PageController extends Controller
 {
+    /**
+     * @Route("/" , name="blog_homepage")
+     * @Method("GET")
+     * @Template("BloggerBlogBundle:Page:index.html.twig")
+     */
     public function indexAction()
     {
         $em = $this->getDoctrine()
@@ -19,16 +27,25 @@ class PageController extends Controller
         $blogs = $em->getRepository('BloggerBlogBundle:Blog')
             ->getLatestBlogs();
 
-        return $this->render('BloggerBlogBundle:Page:index.html.twig', array(
+        return array(
                 'blogs' => $blogs
-            ));
+            );
     }
 
+    /**
+     * @Route("/about" , name="blog_about")
+     * @Method("GET")
+     */
     public function aboutAction()
     {
         return $this->render('BloggerBlogBundle:Page:about.html.twig');
     }
 
+    /**
+     * @Route("/contact" , name="blog_contact")
+     * @Method({"GET", "POST"})
+     * @Template("BloggerBlogBundle:Page:contact.html.twig")
+     */
     public function contactAction()
     {
         $enquiry = new Enquiry();
@@ -55,11 +72,16 @@ class PageController extends Controller
             }
         }
 
-        return $this->render('BloggerBlogBundle:Page:contact.html.twig', array(
+        return array(
             'form' => $form->createView()
-        ));
+        );
     }
 
+    /**
+     * @Route("/")
+     * @Method("GET")
+     * @Template("BloggerBlogBundle:Page:sidebar.html.twig")
+     */
     public function sidebarAction()
     {
         $em = $this->getDoctrine()
@@ -78,12 +100,9 @@ class PageController extends Controller
         $latestComments = $em->getRepository('BloggerBlogBundle:Comment')
                              ->getLatestComments($commentLimit);
 
-        return $this->render('BloggerBlogBundle:Page:sidebar.html.twig', array(
+        return array(
             'latestComments'  => $latestComments,
             'tags'            => $tagWeights
-        ));
+        );
     }
 }
-
-
-
