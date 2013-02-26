@@ -68,7 +68,7 @@ class PageController extends Controller
 
                 // Redirect - This is important to prevent users re-posting
                 // the form if they refresh the page
-                return $this->redirect($this->generateUrl('BloggerBlogBundle_contact'));
+                return $this->redirect($this->generateUrl('blog_contact'));
             }
         }
 
