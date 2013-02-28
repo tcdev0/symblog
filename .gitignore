@@ -1,6 +1,7 @@
 .idea
 app/config/parameters.yml
 app/phpunit.xml
+src/Blogger/BlogBundle/phpunit.xml
 web/bundles/*
 web/css/*
 app/bootstrap.php.cache
@@ -11,3 +12,4 @@ vendor
 composer.phar
 composer.lock
 *.php~
+
